@@ -1,8 +1,11 @@
 # https://docs.flutter.dev/get-started/install/linux/web
+# https://docs.flutter.dev/platform-integration/linux/setup
 
 echo "Install packages"
 
 PACKAGES=(
+    # web apps
+
     "curl"
     "git" 
     "unzip" 
@@ -22,7 +25,31 @@ PACKAGES=(
     "google-chrome-stable"
 
     "code"
+
+    # Linux
+
+    "clang"
+    "cmake"
+    "ninja-build"
+    
+    # В Fedora пакет pkg-config — это просто метапакет (или виртуальный пакет), 
+    # который на самом деле устанавливает основной пакет pkgconf-pkg-config.
+    # Команда dnf list installed pkg-config ничего не выводит, 
+    # потому что такого реального пакета нет — он виртуальный.
+    "pkgconf-pkg-config"  # "pkg-config"
+
+    # В Fedora аналог пакета libgtk-3-dev из Ubuntu/Debian — это gtk3-devel.
+    "gtk3-devel"  # "libgtk-3-dev"
+    
+    # В Fedora аналог пакета libstdc++-12-dev из Ubuntu/Debian — это libstdc++-devel.
+    "libstdc++-devel"  # "libstdc++-12-dev"
+
+    # В Fedora эквивалентом пакета mesa-utils из Ubuntu/Debian является тоже пакет с названием mesa-demos.
+    # Этот пакет содержит утилиты, такие как glxinfo, eglinfo и другие инструменты для диагностики OpenGL/GLX/EGL, аналогично mesa-utils в Ubuntu.
+    "mesa-demos"
 )
+
+SHOULD_EXIT=false
 
 for PACKAGE in ${PACKAGES[@]}; do
 
@@ -35,8 +62,14 @@ for PACKAGE in ${PACKAGES[@]}; do
     else
         # echo "$PACKAGE is not installed"
         echo "sudo dnf install $PACKAGE"
+
+        SHOULD_EXIT=true
     fi
 done
+
+if [ "$SHOULD_EXIT" = true ] ; then
+    exit 1
+fi
 
 echo "Flutter extension"
 

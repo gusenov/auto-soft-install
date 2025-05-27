@@ -15,6 +15,21 @@ PACKAGES=(
     "git-remote-gcrypt"
     "keepassxc"
     "openssl"
+
+    "curl"
+    "git" 
+    "unzip" 
+    "xz"
+    "zip"
+    "mesa-libGLU"
+    
+    "clang"
+    "cmake"
+    "ninja-build"
+    "pkgconf-pkg-config"
+    "gtk3-devel"
+    "libstdc++-devel"
+    "mesa-demos"
 )
 
 for PACKAGE in ${PACKAGES[@]}; do
