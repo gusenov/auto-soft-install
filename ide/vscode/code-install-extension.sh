@@ -1,5 +1,5 @@
 is_extension_installed() {
-    code --list-extensions | grep "$1"
+    code --list-extensions | grep --ignore-case "$1"
 }
 
 EXTENSIONS=(
@@ -14,6 +14,8 @@ EXTENSIONS=(
     "ms-vscode.cpptools-extension-pack"
 
     "ms-vscode.hexeditor"
+
+    "Dart-Code.flutter"
 )
 
 for EXTENSION in ${EXTENSIONS[@]}; do
