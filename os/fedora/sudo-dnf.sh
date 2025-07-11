@@ -30,6 +30,9 @@ PACKAGES=(
     "gtk3-devel"
     "libstdc++-devel"
     "mesa-demos"
+
+    "qt6-qtbase-devel"
+    "qt-creator"
 )
 
 function install()
