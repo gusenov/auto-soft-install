@@ -33,6 +33,8 @@ PACKAGES=(
 
     "qt6-qtbase-devel"
     "qt-creator"
+
+    "inkscape"
 )
 
 function install()
