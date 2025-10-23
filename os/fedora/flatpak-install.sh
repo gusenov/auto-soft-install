@@ -6,6 +6,7 @@ is_flatpak_installed() {
 
 PACKAGES=(
     "com.github.PintaProject.Pinta"
+    "org.torproject.torbrowser-launcher"
 )
 
 for PACKAGE in ${PACKAGES[@]}; do

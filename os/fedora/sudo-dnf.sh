@@ -11,6 +11,7 @@ PACKAGES=(
 
     "chromium"
     "google-chrome-stable"
+#    "torbrowser-launcher"
 
     "git-remote-gcrypt"
     "keepassxc"
