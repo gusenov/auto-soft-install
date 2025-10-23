@@ -16,6 +16,7 @@ PACKAGES=(
     "git-remote-gcrypt"
     "keepassxc"
     "openssl"
+    "openssl-devel"
 
     "curl"
     "git" 
@@ -36,6 +37,22 @@ PACKAGES=(
     "qt-creator"
 
     "inkscape"
+
+    "python3-pip"
+
+    "npm"
+
+    "java-17-openjdk-devel"
+    "java-latest-openjdk"
+    "java-latest-openjdk-devel"
+
+    "patch"
+    
+    "autoconf"
+    "automake"
+    "libtool"
+
+    "perl-FindBin"
 )
 
 function install()
