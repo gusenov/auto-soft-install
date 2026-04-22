@@ -4,9 +4,15 @@ is_extension_installed() {
 
 EXTENSIONS=(
     "GitHub.copilot"
-    "GitHub.copilot-chat"
+     # "GitHub.copilot-chat"
+    "GitHub.vscode-github-actions"
+    "GitHub.github-vscode-theme"
     
     "ms-python.python"
+     # "ms-python.vscode-pylance"
+     # "ms-python.debugpy"
+     # "ms-python.vscode-python-envs"
+
     "ms-toolsai.jupyter"
     "ms-toolsai.jupyter-hub"
     
@@ -14,6 +20,10 @@ EXTENSIONS=(
     "ms-vscode.cpptools-extension-pack"
 
     "ms-vscode.hexeditor"
+
+    "ms-vscode-remote.remote-ssh"
+     # "ms-vscode-remote.remote-ssh-edit"
+     # "ms-vscode.remote-explorer"
 
     "Dart-Code.flutter"
 )
