@@ -19,6 +19,8 @@ PACKAGES=(
     "openssl-devel"
 
     "curl"
+    "transmission"
+
     "git" 
     "unzip" 
     "xz"
