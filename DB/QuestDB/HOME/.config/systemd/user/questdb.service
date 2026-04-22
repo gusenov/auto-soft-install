@@ -1,0 +1,53 @@
+[Unit]
+Description=QuestDB Time Series Database
+Documentation=https://www.questdb.com/docs/
+After=network.target
+
+[Service]
+Type=simple
+Restart=always
+RestartSec=2
+
+
+
+
+# Adjust java path to match requirements of a given distro
+ExecStart=/home/[USER_NAME]/jdk/bin/java \
+--add-exports java.base/jdk.internal.math=io.questdb \
+-p /home/[USER_NAME]/bin/questdb.jar \
+-m io.questdb/io.questdb.ServerMain \
+-DQuestDB-Runtime-66535 \
+-ea -Dnoebug \
+-XX:+UnlockExperimentalVMOptions \
+-XX:+AlwaysPreTouch \
+-XX:+UseParallelOldGC \
+-d /home/[USER_NAME]/var/lib/questdb
+
+# Нет -Xms / -Xmx
+# --add-exports java.base/jdk.internal.math=io.questdb — открывает внутренний API JDK для QuestDB, нужен для низкоуровневых математических операций
+# -p /opt/questdb/bin/questdb.jar — указывает module path (JPMS), правильная замена -jar при модульном запуске
+# -m io.questdb/io.questdb.ServerMain — точка входа через модульную систему
+# -DQuestDB-Runtime-66535 — некорректный синтаксис, нужно =true
+# -ea — включает assertions, стандартно для QuestDB
+# -Dnoebug — отключает debug-вывод
+# -XX:+AlwaysPreTouch — заранее выделяет физическую память под heap, снижает latency при старте
+
+# -XX:+UseParallelOldGC — удалён в Java 15, на Java 17+ не запустится
+# Скрипт использует UseParallelGC, а не UseParallelOldGC — это корректный флаг для Java 17, не удалённый.
+
+
+
+
+ExecReload=/bin/kill -s HUP $MAINPID
+# ExecReload с SIGHUP — убьёт процесс
+
+# Prevent writes to /usr, /boot, and /etc
+ProtectSystem=full
+# ProtectSystem=full — в user-сервисах эта директива игнорируется, можно убрать
+
+StandardError=syslog
+SyslogIdentifier=questdb
+
+[Install]
+WantedBy=multi-user.target
+# WantedBy=multi-user.target — для user-сервиса неправильно, нужно WantedBy=default.target

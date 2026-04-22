@@ -1,0 +1,98 @@
+[Unit]
+Description=QuestDB Time Series Database
+Documentation=https://www.questdb.com/docs/
+After=network.target
+
+[Service]
+Type=simple
+Restart=on-failure
+RestartSec=10
+
+
+
+
+# Adjust java path to match requirements of a given distro
+#ExecStart=/opt/questdb/bin/java \
+#-Xms256m \
+#-Xmx2g \
+#--add-exports java.base/jdk.internal.math=io.questdb \
+#-p /opt/questdb/bin/questdb.jar \
+#-m io.questdb/io.questdb.ServerMain \
+#-DQuestDB-Runtime-66535 \
+#-ea -Dnoebug \
+#-XX:+UnlockExperimentalVMOptions \
+#-XX:+AlwaysPreTouch \
+#-XX:+UseParallelOldGC \
+#-d /opt/questdb/data
+
+# -Xms / -Xmx, иначе JVM возьмёт heap по умолчанию (обычно 25% RAM)
+# --add-exports java.base/jdk.internal.math=io.questdb — открывает внутренний API JDK для QuestDB, нужен для низкоуровневых математических операций
+# -p /opt/questdb/bin/questdb.jar — указывает module path (JPMS), правильная замена -jar при модульном запуске
+# -m io.questdb/io.questdb.ServerMain — точка входа через модульную систему
+# -DQuestDB-Runtime-66535 — это системное свойство без значения в формате -D, что синтаксически некорректно. Должно быть либо: -DQuestDB-Runtime-66535=true либо как отдельный аргумент уже после -m: -m io.questdb/io.questdb.ServerMain -DQuestDB-Runtime-66535
+# -ea — включает assertions, стандартно для QuestDB
+# -Dnoebug — отключает debug-вывод
+# -XX:+AlwaysPreTouch — заранее выделяет физическую память под heap, снижает latency при старте
+
+# -XX:+UseParallelOldGC — этот флаг удалён в Java 15. На Java 17 JVM откажется стартовать с ошибкой. Уберите его — QuestDB нормально работает с GC по умолчанию (G1GC).
+# Скрипт использует UseParallelGC, а не UseParallelOldGC — это корректный флаг для Java 17, не удалённый.
+
+
+
+
+#ExecStart=/opt/questdb/bin/questdb.sh start -d /opt/questdb/data
+# Скрипт questdb.sh start может форкать процесс в фон — тогда systemd потеряет PID и Restart=on-failure не сработает как ожидается. 
+#
+# Скрипт форкает процесс в фон: ${JAVA_CMD} ${JAVA_OPTS} ... > "${QDB_LOG}/stdout-${DATE}.txt" 2>&1 &
+# Символ & в конце — процесс уходит в фон. 
+# Это подтверждает нашу опасение: Type=simple потеряет PID. 
+# Нужно менять на Type=forking либо запускать Java напрямую.
+#
+# Проверьте поведение скрипта. Безопаснее запускать JAR напрямую.
+
+
+
+
+# Переменная JVM_PREPEND — можно задать свои JVM-флаги через окружение:
+Environment="JVM_PREPEND=-Xms256m -Xmx2g"
+
+ExecStart=/opt/questdb/bin/questdb.sh start -n -d /opt/questdb/data
+# Скрипт поддерживает флаг -n (disable HUP handler)
+# Флаг -n запускает процесс foreground — это именно то что нужно для Type=simple!
+# Это чище чем запускать Java напрямую — скрипт сам разберётся с путями, jemalloc, библиотеками и прочим.
+
+
+
+
+# QuestDB не реагирует на SIGHUP как на команду перечитать конфиг — сигнал просто убьёт процесс. 
+# Эту строку лучше убрать, чтобы случайный systemctl reload questdb не уронил базу.
+#ExecReload=/bin/kill -s HUP $MAINPID
+
+# Из скрипта видно что HUP обрабатывается — но не как перечитывание конфига, а как триггер остановки:
+# bashelif [ "${QDB_DISABLE_HUP_HANDLER}" = "" ]; then
+#     ${JAVA_CMD} ... &
+#     $BASE/print-hello.sh ${HELLO_FILE}
+# Когда мы запускаем с флагом -n (disable HUP handler), процесс работает в foreground и HUP вообще не перехватывается — сигнал убьёт процесс.
+# Так что вывод тот же что и раньше — ExecReload добавлять не нужно. Случайный systemctl reload questdb уронит базу.
+
+
+
+
+User=questdb
+Group=questdb
+WorkingDirectory=/opt/questdb
+LimitNOFILE=1024000
+
+# Prevent writes to /usr, /boot, and /etc
+ProtectSystem=full
+
+# ProtectSystem=full делает /usr, /boot и /etc read-only, но /opt при этом остаётся записываемым — так что конкретно здесь конфликта нет. 
+# Однако если вы когда-нибудь захотите усилить до ProtectSystem=strict, тогда /opt тоже станет read-only и QuestDB не сможет писать данные. 
+# На будущее лучше сразу добавить:
+ReadWritePaths=/opt/questdb/data
+
+StandardError=syslog
+SyslogIdentifier=questdb
+
+[Install]
+WantedBy=multi-user.target
