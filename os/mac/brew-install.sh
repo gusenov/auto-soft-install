@@ -14,6 +14,7 @@ brew install --cask cursor
 brew install --cask jetbrains-toolbox
 brew install --cask zed
 #brew install --cask zed@preview
+brew install --cask eclipse-cpp
 
 brew install --cask keepassxc
 brew install --cask libreoffice
