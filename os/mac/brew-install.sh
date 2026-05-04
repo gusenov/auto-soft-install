@@ -8,6 +8,7 @@ brew install git-remote-gcrypt
 brew install gh
 
 brew install gnupg
+brew install tor
 
 brew install --cask vscodium
 brew install --cask claude-code
