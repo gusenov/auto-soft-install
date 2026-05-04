@@ -19,6 +19,7 @@ brew install --cask eclipse-cpp
 brew install --cask sublime-text
 brew install --cask sublime-merge
 brew install --cask emacs
+brew install --cask textmate
 
 brew install --cask keepassxc
 brew install --cask libreoffice
