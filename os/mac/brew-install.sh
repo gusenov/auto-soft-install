@@ -10,6 +10,8 @@ brew install gh
 brew install gnupg
 
 brew install --cask claude-code
+brew install --cask jetbrains-toolbox
+
 brew install --cask keepassxc
 brew install --cask libreoffice
 brew install --cask xnviewmp
