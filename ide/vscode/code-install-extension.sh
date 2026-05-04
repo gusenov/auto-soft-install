@@ -26,7 +26,11 @@ EXTENSIONS=(
      # "ms-vscode.remote-explorer"
 
     "Dart-Code.flutter"
+
+    "rust-lang.rust-analyzer"
 )
+
+MAC_PATH_TO_CODE="/Applications/Visual Studio Code.app/Contents/Resources/app/bin/code"
 
 for EXTENSION in ${EXTENSIONS[@]}; do
 
