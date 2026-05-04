@@ -28,6 +28,8 @@ EXTENSIONS=(
     "Dart-Code.flutter"
 
     "rust-lang.rust-analyzer"
+
+    "anthropic.claude-code"
 )
 
 MAC_PATH_TO_CODE="/Applications/Visual Studio Code.app/Contents/Resources/app/bin/code"
