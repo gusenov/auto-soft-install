@@ -11,6 +11,7 @@ brew install gnupg
 
 brew install --cask claude-code
 brew install --cask cursor
+brew install --cask cursor-cli
 brew install --cask jetbrains-toolbox
 brew install --cask zed
 #brew install --cask zed@preview
