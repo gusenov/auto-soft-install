@@ -24,5 +24,6 @@ brew install --cask emacs
 brew install --cask textmate
 
 brew install --cask keepassxc
+brew install --cask tor-browser
 brew install --cask libreoffice
 brew install --cask xnviewmp
