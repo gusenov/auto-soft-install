@@ -10,6 +10,7 @@ brew install gh
 brew install gnupg
 
 brew install --cask claude-code
+brew install --cask cursor
 brew install --cask jetbrains-toolbox
 
 brew install --cask keepassxc
