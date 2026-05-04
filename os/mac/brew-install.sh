@@ -9,6 +9,7 @@ brew install gh
 
 brew install gnupg
 
+brew install --cask vscodium
 brew install --cask claude-code
 brew install --cask cursor
 brew install --cask cursor-cli
