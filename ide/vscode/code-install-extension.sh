@@ -30,6 +30,7 @@ EXTENSIONS=(
     "rust-lang.rust-analyzer"
 
     "anthropic.claude-code"
+    "Google.geminicodeassist"
 )
 
 MAC_PATH_TO_CODE="/Applications/Visual Studio Code.app/Contents/Resources/app/bin/code"
