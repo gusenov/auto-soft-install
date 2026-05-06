@@ -33,6 +33,7 @@ EXTENSIONS=(
     "Google.geminicodeassist"
     "Google.gemini-cli-vscode-ide-companion"
     "openai.chatgpt"
+    "qwenlm.qwen-code-vscode-ide-companion"
 )
 
 MAC_PATH_TO_CODE="/Applications/Visual Studio Code.app/Contents/Resources/app/bin/code"
