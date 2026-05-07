@@ -8,6 +8,9 @@ brew install git-remote-gcrypt
 brew install gh
 
 brew install gnupg
+brew install pinentry-mac
+#echo "pinentry-program $(which pinentry-mac)" >> ~/.gnupg/gpg-agent.conf
+
 brew install tor
 
 brew install copilot-cli  // https://github.com/features/copilot/cli
