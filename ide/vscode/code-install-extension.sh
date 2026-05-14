@@ -16,8 +16,11 @@ EXTENSIONS=(
     "ms-toolsai.jupyter"
     "ms-toolsai.jupyter-hub"
     
-    "ms-vscode.cpptools"
     "ms-vscode.cpptools-extension-pack"
+     # "ms-vscode.cpptools"
+     # "ms-vscode.cpptools-themes"
+     # "ms-vscode.cpp-devtools"
+     # "ms-vscode.cmake-tools"
 
     "ms-vscode.hexeditor"
 
@@ -34,6 +37,13 @@ EXTENSIONS=(
     "Google.gemini-cli-vscode-ide-companion"
     "openai.chatgpt"
     "qwenlm.qwen-code-vscode-ide-companion"
+
+    "llvm-vs-code-extensions.vscode-clangd"
+    "llvm-vs-code-extensions.lldb-dap"
+
+    # for debugging
+    #"vadimcn.vscode-lldb"
+    #"webfreak.debug"
 )
 
 MAC_PATH_TO_CODE="/Applications/Visual Studio Code.app/Contents/Resources/app/bin/code"
