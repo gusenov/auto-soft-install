@@ -38,3 +38,5 @@ brew install --cask tor-browser
 brew install --cask libreoffice
 brew install --cask xnviewmp
 brew install --cask inkscape
+
+brew install --cask zoom
